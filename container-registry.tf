@@ -2,7 +2,7 @@ resource "azurerm_container_registry" "platform" {
   name                     = "acr${var.environment}platform"
   resource_group_name      = azurerm_resource_group.platform.name
   location                 = azurerm_resource_group.platform.location
-  sku                      = "Premium"
+  sku                      = "Standard"
   admin_enabled            = false
 
 
@@ -10,19 +10,13 @@ resource "azurerm_container_registry" "platform" {
     default_action              = "Deny"
 
 
-    dynamic "ip_rule"   {
-       for_each                    = var.allowed_ips
-      content {
-         action                    = "Allow"
-        ip_range                   = ip_rule.value
+      ip_rule {
+       action                      = "Allow"
+        ip_range                   = var.container_registry_ip
       }
-    }
 
-  }
+      }
 
-  network_rule_bypass_option = "AzureServices"
-
-  public_network_access_enabled = false
 
 
 
@@ -53,7 +47,7 @@ resource "azurerm_private_endpoint" "acr" {
 
   private_dns_zone_group {
     name          = "privatednszonegroup"
-    private_dns_zone_ids = [azurrerm_private_dns_zone.acr.id]
+    private_dns_zone_ids = [azurerm_private_dns_zone.acr.id]
   }
 
   tags         = local.common_tags

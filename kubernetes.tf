@@ -12,7 +12,7 @@ resource "azurerm_kubernetes_cluster" "platform" {
   default_node_pool {
     name                 =  "system"
     vm_size              = "Standard_D4s_v3"
-    vnet_subnet_id       = azurerm_subnet.backend.id
+    vnet_subnet_id       = azurerm_subnet.aks.id
     min_count            = 3
     max_count            = 5 
     node_count           = 3
@@ -55,8 +55,8 @@ azure_active_directory_role_based_access_control {
     }
 
     monitor_metrics {
-      annotations_allowed = ["*"]
-      labels_allowed      = ["*"]
+      annotations_allowed = "*"
+      labels_allowed      = "*"
     }
 
     maintenance_window {

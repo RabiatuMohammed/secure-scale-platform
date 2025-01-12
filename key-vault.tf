@@ -18,7 +18,7 @@ network_acls {
   bypass                   = "AzureServices"
   default_action           = "Deny"
   virtual_network_subnet_ids = [azurerm_subnet.private_endpoints.id]
-  ip_rules                = var.allowed_ips
+  ip_rules                = [var.container_registry_ip]
 }
 
 tags                     = local.common_tags
@@ -73,3 +73,49 @@ metric {
   }
 }
 
+resource "azurerm_key_vault_certificate" "platform" {
+  name          = "appgw-cert-${var.environment}"
+  key_vault_id  = azurerm_key_vault.platform.id
+
+  certificate_policy {
+   issuer_parameters {
+      name = "Self"
+    }
+
+    key_properties {
+      exportable = true
+      key_size   = 2048
+      key_type   = "RSA"
+      reuse_key  = true
+    }
+
+    lifetime_action {
+      action {
+        action_type = "AutoRenew"
+      }
+
+      trigger {
+        days_before_expiry = 30
+      }
+    }
+
+    secret_properties {
+      content_type = "application/x-pkcs12"
+    }
+
+    x509_certificate_properties {
+      key_usage = [
+        "cRLSign",
+        "dataEncipherment",
+        "digitalSignature",
+        "keyAgreement",
+        "keyCertSign",
+        "keyEncipherment",
+      ]
+
+      subject     = "CN=*.${var.environment}.platform"
+      validity_in_months = 12
+    }
+  }
+tags           = local.common_tags
+}

@@ -24,7 +24,7 @@ identity {
 
 network_rules {
   default_action             = "Deny"
-  ip_rules                   = var.allowed_ips
+  ip_rules                   = [var.container_registry_ip]
   virtual_network_subnet_ids = [azurerm_subnet.private_endpoints.id]
   bypass                     = ["AzureServices"]
 
@@ -63,13 +63,13 @@ resource "azurerm_monitor_diagnostic_setting" "storage" {
 
 resource "azurerm_storage_container" "platform_config" {
   name                  = "platform-config"
-  storage_account_id    =  azurerm_storage_account.platform.id
+  storage_account_name =  azurerm_storage_account.platform.name
   container_access_type = "private"
 }
 
 resource "azurerm_storage_container" "security_scan" {
   name                  = "security-scan"
-  storage_account_id    = azurerm_storage_account.platform.id
+  storage_account_name  = azurerm_storage_account.platform.name
   container_access_type = "private"
 }
 

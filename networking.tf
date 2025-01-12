@@ -9,14 +9,14 @@ resource "azurerm_virtual_network" "platform" {
 }
 
 resource "azurerm_subnet" "aks" {
-  name                 = "snet-ask"
+  name                 = "snet-aks"
   resource_group_name  = azurerm_resource_group.platform.name
   virtual_network_name = azurerm_virtual_network.platform.name
   address_prefixes     = ["10.0.0.0/22"]
 
 
 delegation {
-  name      = "ask-delegation"
+  name      = "aks-delegation"
   service_delegation {
     name    = "Microsoft.ContainerService/managedClusters"
     actions = [
@@ -52,12 +52,26 @@ resource "azurerm_subnet" "private_endpoints" {
   
   service_endpoints                          = [
     "Microsoft.Storage", 
-    Microsoft.KeyVault, 
-    Microsoft.ContainerRegistry
+    "Microsoft.KeyVault", 
+    "Microsoft.ContainerRegistry"
     
     ]
 }
 
+resource "azurerm_subnet" "firewall" {
+  name                = "AzureFirewallSubnet"
+  resource_group_name = azurerm_resource_group.platform.name
+  virtual_network_name = azurerm_virtual_network.platform.name
+  address_prefixes     = ["10.0.7.0/24"]
+}
+
+resource "azurerm_public_ip" "firewall" {
+  name                = "pip-fw-${var.environment}"
+  resource_group_name = azurerm_resource_group.platform.name
+  location            =  azurerm_resource_group.platform.location
+  allocation_method   =  "Static"
+  sku                 = "Standard"
+}
 
 resource "azurerm_network_security_group" "aks" {
   name                 = "nsg-aks-${var.environment}"

@@ -3,7 +3,7 @@ resource "azurerm_public_ip" "appgw" {
   resource_group_name = azurerm_resource_group.platform.name
   location            = azurerm_resource_group.platform.location
   allocation_method   = "Static"
-  sku                 = "Premium"
+  sku                 = "Standard"
   tags                = local.common_tags
 }
 
@@ -134,7 +134,7 @@ resource "azurerm_application_gateway" "platform" {
 
 }
 
-resource "azurerm_menitor_diagnostic_setting" "appgw" {
+resource "azurerm_monitor_diagnostic_setting" "appgw" {
   name                       ="appgw-diagnostics"
   target_resource_id         = azurerm_application_gateway.platform.id
   log_analytics_workspace_id = azurerm_log_analytics_workspace.platform.id
@@ -152,8 +152,4 @@ resource "azurerm_menitor_diagnostic_setting" "appgw" {
     category = "ApplicationGatewayPerformanceLog"
   }
 
-  mertic {
-    category = "AllMetrics"
-    enabled  = true
-  }
 }

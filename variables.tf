@@ -45,13 +45,14 @@ variable "aks_node_count" {
 
 variable "tenant_id" {
   type  = string
-  description = "Azure AD tentant ID"
+  description = "Azure AD tenant ID"
 }
 
-variable "allowed_ips" {
-  type    = list(string)
-  description = "List of allowed IP addresses for network rules"
-  default = []
+variable "container_registry_ip" {
+  type    = string
+  description = "IP addresses for container registry access"
+  sensitive = true
+  default = ""
 }
 
 variable "blocked_ip_addresses" {
@@ -150,13 +151,13 @@ variable "network_policy" {
   default     = "calico"
 }
 
-variable "service_cider" {
+variable "service_cidr" {
   type         = string
   description  = "CIDR for kubernetes services"
   default      = "10.0.0.0/16"
 }
 
-variable "pod_cider" {
+variable "pod_cidr" {
  type        =  string
  description = "CIDR for kubernetes pods"
  default     = "10.244.0.0/16"
@@ -178,4 +179,34 @@ variable "memory_threshold" {
   type        = number
   description = "Memory threshold percentage for alerts"
   default     = 80
+}
+
+variable "alert_notification_emails" {
+  type        = list(string)
+  description = "List of email addresses for alerting"
+  default = []
+}
+
+variable "enabled_monitoring" {
+  type        = bool
+  description = "Enable monitoring features"
+  default     = true
+}
+
+variable "enabled_pod_identity" {
+  type        = bool
+  description = "Enable pod identity for AKS"
+  default     = true
+}
+
+variable "budget_amount" {
+  type        = number
+  description = "Monthly budget amount in USD"
+  default     = 1000
+}
+
+variable "budget_alert_percentage" {
+  type     = list(number)
+  description = "List of percentage thresholds for budget alerts"
+  default = [ 50, 75, 90, 100 ]
 }
