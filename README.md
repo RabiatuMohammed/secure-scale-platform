@@ -1,49 +1,66 @@
 # Secure Azure DevSecOps Platform for Regulated Cloud Environments
 
 ## Overview
-This platform demonstrates the design and implementation of a secure, scalable cloud infrastructure on Microsoft Azure using DevSecOps principles.
+This project demonstrates how I designed and implemented a secure, scalable cloud environment on Microsoft Azure using DevSecOps principles.
 
-It focuses on automating infrastructure provisioning, enforcing security best practices, and enabling reliable deployment pipelines for cloud-native applications in regulated environments such as healthcare and financial systems.
+My focus was not just on deploying infrastructure, but on building a system where security, automation, and reliability are integrated from the start. The platform is designed to reflect real-world requirements where systems must be secure by design and easy to manage at scale.
 
 ---
 
 ## Use Case
-This platform is designed for organisations that require secure and compliant cloud infrastructure.
+I built this platform with regulated environments in mind, such as healthcare and financial systems, where there are strict requirements around:
 
-It is particularly relevant for industries such as healthcare and finance, where strict requirements around data protection, access control, and system resilience must be enforced.
+Data protection
+Access control
+System resilience
 
-It demonstrates how DevSecOps practices can be used to standardise deployments, reduce configuration drift, and improve overall cloud security posture.
+The goal was to show how DevSecOps practices can be used to:
+
+Standardise infrastructure deployments
+Reduce configuration drift
+Improve overall cloud security posture
 
 ---
 
 ## Architecture
-- Azure Virtual Network with segmented subnets for isolation  
-- Azure Kubernetes Service (AKS) for container orchestration  
-- Azure Container Registry for image management  
-- Terraform for infrastructure provisioning  
-- CI/CD pipeline for automated deployment  
+The platform is built using the following core components:
+
+Azure Virtual Network with segmented subnets for traffic isolation
+Azure Kubernetes Service (AKS) for container orchestration
+Azure Container Registry for secure image management
+Terraform for Infrastructure as Code (IaC)
+CI/CD pipelines for automated deployment
+
+This architecture allows for scalable and repeatable deployments while maintaining strong security controls.
 
 ---
 
 ## Security Features
-- Identity and Access Management (IAM) implementing least privilege and role-based access control (RBAC)  
-- Azure Key Vault for secure secrets management  
-- Secure storage configuration following Azure best practices  
-- Network segmentation and access control policies  
-- Monitoring and alerting using Azure Monitor  
+Security was a core part of the design. Key controls include:
+
+Identity and Access Management using RBAC and least privilege principles
+Azure Key Vault for secure secrets storage
+Network segmentation to limit unnecessary access between components
+Azure Monitor for logging, monitoring, and threat detection
+
+These controls help ensure that the environment is both secure and observable.
 
 ---
 
 ## Technology Stack
-- Microsoft Azure  
-- Terraform  
-- Kubernetes (AKS)  
-- Azure DevOps / CI/CD pipelines  
-- Azure Monitor  
+Microsoft Azure
+Terraform
+Kubernetes (AKS)
+Azure DevOps / CI/CD pipelines
+Azure Monitor
 
 ---
 
 ## Outcome
-The platform provides a structured approach to designing and deploying secure, scalable cloud environments that prioritise security, automation, and reliability.
+This project demonstrates how secure cloud environments can be built using a DevSecOps approach.
 
-It reflects the application of DevSecOps principles in real-world cloud engineering scenarios.
+It reflects my ability to design and implement cloud infrastructure that is:
+
+Secure by design
+Automated and repeatable
+Scalable and resilient
